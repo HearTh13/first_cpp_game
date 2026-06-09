@@ -1,5 +1,8 @@
 #include "game.h"
-#include <iostream>
+#include "textureManager.h"
+#include "gameObject.h"
+
+GameObject* player;
 
 Game::Game() {
     isRunning = false;
@@ -14,7 +17,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
         flags = SDL_WINDOW_FULLSCREEN;
     }
 
-    std::cout << "Status: " << SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) << std::endl;
+    std::cout << "Status: " << (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) == 1) << std::endl;
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) == 1) {
         std::cout << "Subsystems Initialized!..." << std::endl;
 
@@ -31,6 +34,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
     } else {
         isRunning = false;
     }
+
+    player = new GameObject((textureLocation + "/characters/player.png").c_str(), renderer);
+
+
 }
 
 void Game::handleEvents() {
@@ -46,11 +53,12 @@ void Game::handleEvents() {
 }
 
 void Game::update(){
-
+    player->update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
+    player->render();
     SDL_RenderPresent(renderer);
 }
 
