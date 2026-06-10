@@ -1,3 +1,4 @@
+#pragma once
 #include "game.h"
 
 class GameObject{
@@ -5,18 +6,12 @@ class GameObject{
         GameObject(const char* textureSheet, SDL_Renderer* ren);
         ~GameObject();
 
-        void update();
-        void render();
+        virtual void update();
+        virtual void render();
 
         void setObjName(std::string name);
-        void moveUp();
-        void moveDown();
-        void moveLeft();
-        void moveRight();
-        void stopVertical();
-        void stopHorizontal();
 
-    private:
+    protected:
         std::string objName = "";
 
         SDL_Texture* objTexture;
@@ -25,6 +20,4 @@ class GameObject{
 
         float xPos;
         float yPos;
-        float xVel;
-        float yVel;
 };

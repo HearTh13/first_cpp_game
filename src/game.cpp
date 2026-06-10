@@ -1,6 +1,7 @@
 #include "game.h"
 #include "textureManager.h"
 #include "gameObject.h"
+#include "player.h"
 
 GameObject* player;
 
@@ -35,28 +36,15 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
         isRunning = false;
     }
 
-    player = new GameObject((textureLocation + "/characters/player.png").c_str(), renderer);
+    player = new Player((textureLocation + "/characters/player.png").c_str(), renderer);
 }
 
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
-    SDL_Scancode key = event.key.scancode;
     switch (event.type) {
         case SDL_EVENT_QUIT:
             isRunning = false;
-            break;
-        case SDL_EVENT_KEY_DOWN:
-            if (key == SDL_SCANCODE_W) player->moveUp();
-            if (key == SDL_SCANCODE_S) player->moveDown();
-            if (key == SDL_SCANCODE_A) player->moveLeft();
-            if (key == SDL_SCANCODE_D) player->moveRight();
-            break;
-        case SDL_EVENT_KEY_UP:
-            if (key == SDL_SCANCODE_W || key == SDL_SCANCODE_S) 
-                player->stopVertical();
-            if (key == SDL_SCANCODE_A || key == SDL_SCANCODE_D) 
-                player->stopHorizontal();
             break;
         default:
             break;
